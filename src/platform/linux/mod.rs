@@ -9,6 +9,7 @@ use PixelFormat;
 use PixelFormatRequirements;
 
 use api::osmesa::{self, OsMesaContext};
+use libc;
 
 pub use self::api_dispatch::{Window, WindowProxy, MonitorId, get_available_monitors, get_primary_monitor};
 pub use self::api_dispatch::{WaitEventsIterator, PollEventsIterator};
@@ -16,7 +17,9 @@ pub use self::api_dispatch::PlatformSpecificWindowBuilderAttributes;
 mod api_dispatch;
 
 #[derive(Default)]
-pub struct PlatformSpecificHeadlessBuilderAttributes;
+pub struct PlatformSpecificHeadlessBuilderAttributes {
+    pub xlib_parent: Option<*mut libc::c_void>,
+}
 
 pub struct HeadlessContext(OsMesaContext);
 
